@@ -42,7 +42,7 @@ public class CategoryController {
     @PatchMapping("/api/v1/categories/{id}")
     Mono<Category> updateOne(@PathVariable String id, @RequestBody Category category){
         return categoryRepository.findById(id).flatMap(foundCategory -> {
-            if(foundCategory.getDescription() != category.getDescription()){
+            if(!foundCategory.getDescription().equalsIgnoreCase(category.getDescription())){
                 foundCategory.setDescription(category.getDescription());
                 return categoryRepository.save(foundCategory);
             }
