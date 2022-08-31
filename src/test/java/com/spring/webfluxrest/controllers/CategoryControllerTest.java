@@ -2,7 +2,6 @@ package com.spring.webfluxrest.controllers;
 
 import com.spring.webfluxrest.domain.Category;
 import com.spring.webfluxrest.repositories.CategoryRepository;
-import com.spring.webfluxrest.repositories.VendorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -11,7 +10,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 
 class CategoryControllerTest {
