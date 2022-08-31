@@ -56,7 +56,7 @@ class CategoryControllerTest {
     @Test
     public void testCreateCategory(){
         BDDMockito.given(categoryRepository.saveAll(any(Publisher.class)))
-                .willReturn(Flux.just(Category.builder().description(anyString()).build()));
+                .willReturn(Flux.just(Category.builder().build()));
 
         Mono<Category> categoryToSavedMono = Mono.just(Category.builder().description("Cat1").build());
         webTestClient.post()
@@ -70,7 +70,7 @@ class CategoryControllerTest {
     @Test
     public void testUpdateCategory(){
         BDDMockito.given(categoryRepository.save(any(Category.class)))
-                .willReturn(Mono.just(Category.builder().description(anyString()).build()));
+                .willReturn(Mono.just(Category.builder().build()));
 
         Mono<Category> categoryToUpdateMono = Mono.just(Category.builder().description("Cat1").build());
         webTestClient.put()

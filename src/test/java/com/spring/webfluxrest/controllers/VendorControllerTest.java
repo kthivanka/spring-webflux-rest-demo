@@ -49,7 +49,7 @@ class VendorControllerTest {
     @Test
     void getVendorById() {
         BDDMockito.given(vendorRepository.findById(anyString()))
-                .willReturn(Mono.just(Vendor.builder().firstName("Fred").lastName("Flintstones").build()));
+                .willReturn(Mono.just(Vendor.builder().firstName("jack").lastName("sparrow").build()));
 
         webTestClient.get().uri("/api/v1/vendors/foo")
                 .exchange()
@@ -58,8 +58,8 @@ class VendorControllerTest {
 
     @Test
     void testCreateVendor(){
-        BDDMockito.given((vendorRepository.saveAll(any(Publisher.class))))
-                .willReturn(Flux.just(Vendor.builder().firstName(anyString()).lastName(anyString()).build()));
+        BDDMockito.given(vendorRepository.saveAll(any(Publisher.class)))
+                .willReturn(Flux.just(Vendor.builder().build()));
 
         Mono<Vendor> vendorMonoToSave = Mono.just(Vendor.builder().firstName("jack").lastName("sparrow").build());
 
