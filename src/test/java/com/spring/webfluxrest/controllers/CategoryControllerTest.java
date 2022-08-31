@@ -80,4 +80,21 @@ class CategoryControllerTest {
                 .expectStatus()
                 .is2xxSuccessful();
     }
+
+    @Test
+    public void testPatchCategory(){
+        BDDMockito.given(categoryRepository.findById(anyString()))
+                .willReturn(Mono.just(Category.builder().build()));
+
+        BDDMockito.given(categoryRepository.save(any(Category.class)))
+                .willReturn(Mono.just(Category.builder().build()));
+
+        Mono<Category> categoryToUpdateMono = Mono.just(Category.builder().description("Cat1").build());
+        webTestClient.patch()
+                .uri("/api/v1/categories/foo")
+                .body(categoryToUpdateMono, Category.class)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful();
+    }
 }
