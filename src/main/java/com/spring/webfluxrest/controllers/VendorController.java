@@ -38,4 +38,20 @@ public class VendorController {
         vendor.setId(id);
         return vendorRepository.save(vendor);
     }
+
+    @PatchMapping("/api/v1/vendors/{id}")
+    Mono<Vendor> updateOne(@PathVariable String id, @RequestBody Vendor vendor){
+        return vendorRepository.findById(id)
+                .flatMap(foundVendor -> {
+                    if(!foundVendor.getFirstName().equalsIgnoreCase(vendor.getFirstName())){
+                        foundVendor.setFirstName(vendor.getFirstName());
+                        return vendorRepository.save(foundVendor);
+                    }
+                    if(!foundVendor.getLastName().equalsIgnoreCase(vendor.getLastName())){
+                        foundVendor.setLastName(vendor.getLastName());
+                        return vendorRepository.save(foundVendor);
+                    }
+                    return Mono.just(foundVendor);
+                } );
+    }
 }
