@@ -96,5 +96,7 @@ class CategoryControllerTest {
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
+
+        BDDMockito.verify(categoryRepository).save(any());
     }
 }
