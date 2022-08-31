@@ -13,6 +13,9 @@ import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 class VendorControllerTest {
 
@@ -29,7 +32,7 @@ class VendorControllerTest {
 
     @Test
     void getAllVendors() {
-        BDDMockito.given(vendorRepository.findAll()).willReturn(Flux
+        given(vendorRepository.findAll()).willReturn(Flux
                 .just(Vendor.builder()
                                 .firstName("Davy")
                                 .lastName("Jones")
@@ -48,7 +51,7 @@ class VendorControllerTest {
 
     @Test
     void getVendorById() {
-        BDDMockito.given(vendorRepository.findById(anyString()))
+        given(vendorRepository.findById(anyString()))
                 .willReturn(Mono.just(Vendor.builder().firstName("jack").lastName("sparrow").build()));
 
         webTestClient.get().uri("/api/v1/vendors/foo")
@@ -58,7 +61,7 @@ class VendorControllerTest {
 
     @Test
     void testCreateVendor(){
-        BDDMockito.given(vendorRepository.saveAll(any(Publisher.class)))
+        given(vendorRepository.saveAll(any(Publisher.class)))
                 .willReturn(Flux.just(Vendor.builder().build()));
 
         Mono<Vendor> vendorMonoToSave = Mono.just(Vendor.builder().firstName("jack").lastName("sparrow").build());
@@ -73,7 +76,7 @@ class VendorControllerTest {
 
     @Test
     void testUpdateVendor(){
-        BDDMockito.given(vendorRepository.save(any(Vendor.class)))
+        given(vendorRepository.save(any(Vendor.class)))
                 .willReturn(Mono.just(Vendor.builder().build()));
 
         Mono<Vendor> vendorMonoToUpdate = Mono.just(Vendor.builder().firstName("jack").lastName("sparrow").build());
