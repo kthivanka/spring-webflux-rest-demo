@@ -99,4 +99,24 @@ class CategoryControllerTest {
 
         BDDMockito.verify(categoryRepository).save(any());
     }
+
+    @Test
+    public void testPatchNoChanges() {
+        given(categoryRepository.findById(anyString()))
+                .willReturn(Mono.just(Category.builder().description("").build()));
+
+        given(categoryRepository.save(any(Category.class)))
+                .willReturn(Mono.just(Category.builder().description("").build()));
+
+        Mono<Category> catToUpdateMono = Mono.just(Category.builder().description("").build());
+
+        webTestClient.patch()
+                .uri("/api/v1/categories/asdfgh")
+                .body(catToUpdateMono, Category.class)
+                .exchange()
+                .expectStatus()
+                .isOk();
+
+        verify(categoryRepository, never()).save(any());
+    }
 }
